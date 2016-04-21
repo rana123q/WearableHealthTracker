@@ -1,12 +1,19 @@
 package com.example.rana_jabareen.wearablehealthtracker;
 
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase;
 
-import java.util.HashMap;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -43,7 +50,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private HashMap hp;
 
-    public DBHelper(Context context) {
+    public DBHelper(Context context)
+    {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -76,24 +84,28 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertLocation(double Longitude, double Latitude, String ValueDate) {
+    public void insertLocation (double Longitude, double Latitude, String ValueDate )
+    {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("Longitude", Longitude);
-        contentValues.put("Latitude", Latitude);
+        contentValues.put("Longitude",Longitude);
+        contentValues.put("Latitude",Latitude);
         contentValues.put("ValueDate", ValueDate);
         contentValues.put("UploadFlag", 0);  // 0 false  // 1 true
         contentValues.put("DownloadFlag", 0);
         db.insert("Location", null, contentValues);
 
     }
-
-    public Cursor getLocation() {
+    public Cursor getLocation(){
         SQLiteDatabase db = this.getReadableDatabase();
         final String MY_QUERY = "select * from Location";
-        Cursor res = db.rawQuery(MY_QUERY, null);
+        Cursor res =  db.rawQuery( MY_QUERY, null );
         return res;
     }
+
+
+
+
 
 
 }
